@@ -27,6 +27,8 @@ Maintainer: Sylvain Miermont
 #include <unistd.h>        /* lseek, close */
 #include <fcntl.h>        /* open */
 #include <string.h>        /* memset */
+//#include <wiringPi.h>
+
 
 #include <sys/ioctl.h>
 #include <linux/spi/spidev.h>
@@ -57,6 +59,8 @@ Maintainer: Sylvain Miermont
 #define SPI_DEV_PATH    "/dev/spidev0.0"
 //#define SPI_DEV_PATH    "/dev/spidev32766.0"
 
+#define GPIO_RESET_PIN	0
+
 /* -------------------------------------------------------------------------- */
 /* --- PUBLIC FUNCTIONS DEFINITION ------------------------------------------ */
 
@@ -76,6 +80,12 @@ int lgw_spi_open(void **spi_target_ptr) {
         DEBUG_MSG("ERROR: MALLOC FAIL\n");
         return LGW_SPI_ERROR;
     }
+    
+    //wiringPiSetup();
+	//pinMode(GPIO_RESET_PIN, OUTPUT);
+	//digitalWrite(GPIO_RESET_PIN,HIGH);
+	//sleep(5);
+	//digitalWrite(GPIO_RESET_PIN, LOW);	//added by Kabanov
 
     /* open SPI device */
     dev = open(SPI_DEV_PATH, O_RDWR);
